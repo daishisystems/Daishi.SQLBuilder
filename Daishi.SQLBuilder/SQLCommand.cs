@@ -12,6 +12,7 @@ namespace Daishi.SQLBuilder {
         public object Result { get; private set; }
         public string CommandText { get; set; }
         public SQLCommandType CommandType { get; set; }
+        public SqlConnection Connection { get; set; }
 
         public SQLCommand(string connectionString) {
             this.connectionString = connectionString;
@@ -20,12 +21,20 @@ namespace Daishi.SQLBuilder {
         public void Execute() {
             switch (CommandType) {
                 case SQLCommandType.Reader:
-                    throw new NotImplementedException();
-                case SQLCommandType.Writer:
-                    using (var connection = new SqlConnection(connectionString)) {
-                        connection.Open();
+                    Connection = new SqlConnection(connectionString);
+                    Connection.Open();
 
-                        using (var command = connection.CreateCommand()) {
+                    using (var command = Connection.CreateCommand()) {
+                        command.CommandText = CommandText;
+                        Result = command.ExecuteReader();
+                    }
+
+                    break;
+                case SQLCommandType.Writer:
+                    using (Connection = new SqlConnection(connectionString)) {
+                        Connection.Open();
+
+                        using (var command = Connection.CreateCommand()) {
                             command.CommandText = CommandText;
                             Result = command.ExecuteScalar();
                         }

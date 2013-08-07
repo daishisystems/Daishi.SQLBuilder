@@ -55,6 +55,12 @@
       <DependentUpon>SQLBuilderInsert.feature</DependentUpon>
     </Compile>
     <Compile Include="SQLBuilderInsertSteps.cs" />
+    <Compile Include="SQLCommandReader.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SQLCommandReader.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SQLCommandReaderSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -62,6 +68,10 @@
     <None Include="SQLBuilderInsert.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>SQLBuilderInsert.feature.cs</LastGenOutput>
+    </None>
+    <None Include="SQLCommandReader.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>SQLCommandReader.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

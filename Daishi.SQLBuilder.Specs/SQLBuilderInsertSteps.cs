@@ -11,8 +11,8 @@ using TechTalk.SpecFlow;
 namespace Daishi.SQLBuilder.Specs {
     [Binding]
     public class SQLBuilderInsertSteps {
-        private string connectionString = ConfigurationManager.ConnectionStrings[@"ePlanner"].ConnectionString;
-        private SQLBatchBuilder sqlBatchBuilder;
+        private static string connectionString = ConfigurationManager.ConnectionStrings[@"ePlanner"].ConnectionString;
+        private static SQLBatchBuilder sqlBatchBuilder;
 
         [Given(@"I have provided a SQL insert command")]
         public void GivenIHaveProvidedASQLInsertCommand() {
@@ -38,8 +38,8 @@ namespace Daishi.SQLBuilder.Specs {
             Assert.IsTrue((decimal) sqlBatchBuilder.Result > 0);
         }
 
-        [AfterScenario]
-        public void CleanUp() {
+        [After(@"requires_teardown")]
+        public static void CleanUp() {
             var sqlDeletor = new SQLBuilder(connectionString);
 
             sqlDeletor

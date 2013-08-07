@@ -12,17 +12,18 @@ namespace Daishi.SQLBuilder.Specs {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("SQLBuilderInsert")]
-    public partial class SQLBuilderInsertFeature {
+    [NUnit.Framework.DescriptionAttribute("SQLCommandReader")]
+    public partial class SQLCommandReaderFeature {
         private static TechTalk.SpecFlow.ITestRunner testRunner;
 
-#line 1 "SQLBuilderInsert.feature"
+#line 1 "SQLCommandReader.feature"
 #line hidden
 
         [NUnit.Framework.TestFixtureSetUpAttribute()]
         public virtual void FeatureSetup() {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            var featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SQLBuilderInsert", "Ensure that SQL commands are correctly applied by the SQLCommand component.", ProgrammingLanguage.CSharp, ((string[]) (null)));
+            var featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SQLCommandReader", "Ensure that datasets returned from SQLCommand in SQLCommandType.Reader are persis" +
+                                                                                                                                   "ted to a SQLDataReader", ProgrammingLanguage.CSharp, ((string[]) (null)));
             testRunner.OnFeatureStart(featureInfo);
         }
 
@@ -49,20 +50,19 @@ namespace Daishi.SQLBuilder.Specs {
         }
 
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Insert data")]
-        [NUnit.Framework.CategoryAttribute("requires_teardown")]
-        public virtual void InsertData() {
-            var scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Insert data", new string[] {
-                "requires_teardown"
-            });
-#line 5
+        [NUnit.Framework.DescriptionAttribute("Read data")]
+        public virtual void ReadData() {
+            var scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Read data", ((string[]) (null)));
+#line 4
             this.ScenarioSetup(scenarioInfo);
+#line 5
+            testRunner.Given("I have invoked a select command", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "Given ");
 #line 6
-            testRunner.Given("I have provided a SQL insert command", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "Given ");
+            testRunner.And("SQLCommand is in read-mode", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "And ");
 #line 7
-            testRunner.When("I invoke the command", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "When ");
+            testRunner.When("the requested data is returned", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "When ");
 #line 8
-            testRunner.Then("a row is added to the database", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "Then ");
+            testRunner.Then("the rows are persisted to a SQLDataReader", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
