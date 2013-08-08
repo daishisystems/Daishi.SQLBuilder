@@ -1,14 +1,19 @@
 ﻿#region Includes
 
+using System.Collections.Generic;
 using System.Linq;
 
 #endregion
 
 namespace Daishi.SQLBuilder {
     public class SQLBatchBuilder : SQLBuilder {
-        private readonly SQLBuilder[] sqlBuilders;
+        private readonly IEnumerable<SQLBuilder> sqlBuilders;
 
         public SQLBatchBuilder(string connectionString, params SQLBuilder[] sqlBuilders) : base(connectionString) {
+            this.sqlBuilders = sqlBuilders;
+        }
+
+        public SQLBatchBuilder(string connectionString, IEnumerable<SQLBuilder> sqlBuilders) : base(connectionString) {
             this.sqlBuilders = sqlBuilders;
         }
 
