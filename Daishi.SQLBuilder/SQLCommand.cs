@@ -12,7 +12,7 @@ namespace Daishi.SQLBuilder {
         public object Result { get; private set; }
         public string CommandText { get; set; }
         public SQLCommandType CommandType { get; set; }
-        public SqlConnection Connection { get; set; }
+        public SqlConnection Connection { get; private set; }
 
         public SQLCommand(string connectionString) {
             this.connectionString = connectionString;

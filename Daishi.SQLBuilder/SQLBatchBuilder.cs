@@ -1,32 +1,23 @@
 ﻿#region Includes
 
-using System;
 using System.Linq;
 
 #endregion
 
 namespace Daishi.SQLBuilder {
-    public class SQLBatchBuilder : ICommand {
-        private readonly string connectionString;
+    public class SQLBatchBuilder : SQLBuilder {
         private readonly SQLBuilder[] sqlBuilders;
 
-        public object Result { get; private set; }
-
-        public SQLBatchBuilder(string connectionString, params SQLBuilder[] sqlBuilders) {
-            this.connectionString = connectionString;
+        public SQLBatchBuilder(string connectionString, params SQLBuilder[] sqlBuilders) : base(connectionString) {
             this.sqlBuilders = sqlBuilders;
         }
 
-        public void Execute() {
-            var sqlBuilder = new SQLBuilder(connectionString) {Command = {CommandText = ToString()}};
-            sqlBuilder.Command.CommandType = SQLCommandType.Writer;
+        public override void Execute() {
+            Command.CommandText = ToString();
+            Command.CommandType = SQLCommandType.Writer;
 
-            sqlBuilder.Command.Execute();
-            Result = sqlBuilder.Command.Result;
-        }
-
-        public void Undo() {
-            throw new NotImplementedException();
+            Command.Execute();
+            Result = Command.Result;
         }
 
         public override string ToString() {

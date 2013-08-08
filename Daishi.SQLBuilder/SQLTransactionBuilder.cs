@@ -32,9 +32,12 @@ namespace Daishi.SQLBuilder {
                         }
 
                         transaction.Commit();
+                        Result = true;
                     }
                     catch (Exception) {
                         transaction.Rollback();
+                        Result = false;
+
                         throw;
                     }
                 }
