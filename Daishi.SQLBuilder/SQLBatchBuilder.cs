@@ -26,7 +26,7 @@ namespace Daishi.SQLBuilder {
         }
 
         public override string ToString() {
-            return string.Concat(string.Join(@";", sqlBuilders.Select(sb => sb.Command.CommandText)), @";");
+            return string.Concat(string.Join(@";", sqlBuilders.Select(sb => sb.ToString())), @";");
         }
     }
 }

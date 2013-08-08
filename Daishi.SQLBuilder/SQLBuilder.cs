@@ -21,5 +21,9 @@ namespace Daishi.SQLBuilder {
         public void Undo() {
             throw new NotImplementedException();
         }
+
+        public override string ToString() {
+            return Command.CommandText;
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace Daishi.SQLBuilder {
                     try {
                         foreach (var sqlBuilder in sqlBuilders) {
                             using (var command = connection.CreateCommand()) {
-                                command.CommandText = sqlBuilder.Command.CommandText;
+                                command.CommandText = sqlBuilder.ToString();
                                 command.Transaction = transaction;
                                 command.ExecuteNonQuery();
                             }
