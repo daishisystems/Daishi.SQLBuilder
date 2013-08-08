@@ -102,7 +102,7 @@ namespace Daishi.SQLBuilder.UnitTests {
                 new DummyPOCOWithIntId {Id = 3}
             };
 
-            Assert.AreEqual(correctSQL, sqlBuilder.In(dummyPOCOsWithIntIds.Select(d => d.Id)).Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.In(dummyPOCOsWithIntIds.Select(d => d.Id).ToArray()).Command.CommandText);
         }
 
         [Test]
@@ -116,7 +116,23 @@ namespace Daishi.SQLBuilder.UnitTests {
                 new DummyPOCOWithStringId {Id = @"Three"}
             };
 
-            Assert.AreEqual(correctSQL, sqlBuilder.In(dummyPOCOsWithStringIds.Select(d => d.Id)).Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.In(dummyPOCOsWithStringIds.Select(d => d.Id).ToArray()).Command.CommandText);
+        }
+
+        [Test]
+        public void SQLBuilderAppendsAndBitwiseOperator() {
+            var sqlBuilder = new SQLBuilder(string.Empty);
+            const string correctSQL = @" and myColumn";
+
+            Assert.AreEqual(correctSQL, sqlBuilder.And(@"myColumn").Command.CommandText);
+        }
+
+        [Test]
+        public void SQLBuilderAppendsOrBitwiseOperator() {
+            var sqlBuilder = new SQLBuilder(string.Empty);
+            const string correctSQL = @" or myColumn";
+
+            Assert.AreEqual(correctSQL, sqlBuilder.Or(@"myColumn").Command.CommandText);
         }
     }
 }

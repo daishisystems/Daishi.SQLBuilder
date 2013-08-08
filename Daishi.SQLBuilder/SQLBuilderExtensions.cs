@@ -60,13 +60,23 @@ namespace Daishi.SQLBuilder {
             return source;
         }
 
-        public static SQLBuilder In(this SQLBuilder source, IEnumerable<int> constraints) {
+        public static SQLBuilder In(this SQLBuilder source, params int[] constraints) {
             source.Command.CommandText = string.Concat(source.Command.CommandText, @" in (", string.Join(@",", constraints), @")");
             return source;
         }
 
-        public static SQLBuilder In(this SQLBuilder source, IEnumerable<string> constraints) {
+        public static SQLBuilder In(this SQLBuilder source, params string[] constraints) {
             source.Command.CommandText = string.Concat(source.Command.CommandText, @" in (", string.Join(@",", constraints.Select(c => string.Concat(@"'", c, @"'"))), @")");
+            return source;
+        }
+
+        public static SQLBuilder And(this SQLBuilder source, string columnName) {
+            source.Command.CommandText = string.Concat(source.Command.CommandText, @" and ", columnName);
+            return source;
+        }
+
+        public static SQLBuilder Or(this SQLBuilder source, string columnName) {
+            source.Command.CommandText = string.Concat(source.Command.CommandText, @" or ", columnName);
             return source;
         }
     }
