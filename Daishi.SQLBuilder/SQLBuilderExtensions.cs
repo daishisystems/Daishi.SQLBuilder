@@ -60,6 +60,16 @@ namespace Daishi.SQLBuilder {
             return source;
         }
 
+        public static SQLBuilder NotEqualTo(this SQLBuilder source, int identifier) {
+            source.Command.CommandText = string.Concat(source.Command.CommandText, @"!=", identifier);
+            return source;
+        }
+
+        public static SQLBuilder NotEqualTo(this SQLBuilder source, string identifier) {
+            source.Command.CommandText = string.Concat(source.Command.CommandText, @"!=", string.Concat(@"'", identifier, @"'"));
+            return source;
+        }
+
         public static SQLBuilder In(this SQLBuilder source, params int[] constraints) {
             source.Command.CommandText = string.Concat(source.Command.CommandText, @" in (", string.Join(@",", constraints), @")");
             return source;

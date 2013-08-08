@@ -76,6 +76,24 @@ namespace Daishi.SQLBuilder.UnitTests {
         }
 
         [Test]
+        public void SQLBuilderAppendsNotEqualClauseWithIntegerBasedIdentifiers() {
+            var sqlBuilder = new SQLBuilder(string.Empty);
+            const string correctSQL = @"!=1";
+
+            var dummyPOCOWithIntId = new DummyPOCO {Id = 1};
+            Assert.AreEqual(correctSQL, sqlBuilder.NotEqualTo(dummyPOCOWithIntId.Id).Command.CommandText);
+        }
+
+        [Test]
+        public void SQLBuilderAppendsNotEqualClauseWithStringBasedIdentifiers() {
+            var sqlBuilder = new SQLBuilder(string.Empty);
+            const string correctSQL = @"!='Dummy'";
+
+            var dummyPOCOWithIntId = new DummyPOCO {FirstName = @"Dummy"};
+            Assert.AreEqual(correctSQL, sqlBuilder.NotEqualTo(dummyPOCOWithIntId.FirstName).Command.CommandText);
+        }
+
+        [Test]
         public void SQLBuilderWritesCorrectDeleteCommand() {
             var sqlBuilder = new SQLBuilder(string.Empty);
             const string correctSQL = @"delete";
