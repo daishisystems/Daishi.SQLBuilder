@@ -32,7 +32,7 @@ namespace Daishi.SQLBuilder {
             stringBuilder.Append(string.Join(@",", formattedValues));
             stringBuilder.Append(@")");
 
-            source.Command.CommandText = string.Concat(source.Command.CommandText, @"insert into dbo.", tableName, @" (", string.Join(@",", parameters), @")", stringBuilder);
+            source.Command.CommandText = string.Concat(source.Command.CommandText, @"insert dbo.", tableName, @" (", string.Join(@",", parameters), @")", stringBuilder);
 
             source.Command.CommandType = SQLCommandType.Writer;
             return source;

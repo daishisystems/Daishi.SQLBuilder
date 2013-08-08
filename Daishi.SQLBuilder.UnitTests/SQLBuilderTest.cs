@@ -52,7 +52,7 @@ namespace Daishi.SQLBuilder.UnitTests {
             };
 
             var parameters = new List<string> {@"id", @"firstname", @"surname"};
-            const string correctSQL = @"insert into dbo.myTable (id,firstname,surname) values (1,'Dummy','POCO')";
+            const string correctSQL = @"insert dbo.myTable (id,firstname,surname) values (1,'Dummy','POCO')";
 
             Assert.AreEqual(correctSQL, sqlBuilder.Insert(@"myTable", parameters, dummyPoco.Id, dummyPoco.FirstName, dummyPoco.Surname).Command.CommandText);
         }
