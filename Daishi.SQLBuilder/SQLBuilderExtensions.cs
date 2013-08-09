@@ -75,7 +75,17 @@ namespace Daishi.SQLBuilder {
             return source;
         }
 
+        public static SQLBuilder In(this SQLBuilder source, IEnumerable<int> constraints) {
+            source.Command.CommandText = string.Concat(source.Command.CommandText, @" in (", string.Join(@",", constraints), @")");
+            return source;
+        }
+
         public static SQLBuilder In(this SQLBuilder source, params string[] constraints) {
+            source.Command.CommandText = string.Concat(source.Command.CommandText, @" in (", string.Join(@",", constraints.Select(c => string.Concat(@"'", c, @"'"))), @")");
+            return source;
+        }
+
+        public static SQLBuilder In(this SQLBuilder source, IEnumerable<string> constraints) {
             source.Command.CommandText = string.Concat(source.Command.CommandText, @" in (", string.Join(@",", constraints.Select(c => string.Concat(@"'", c, @"'"))), @")");
             return source;
         }
