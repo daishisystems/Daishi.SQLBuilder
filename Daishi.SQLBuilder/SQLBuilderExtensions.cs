@@ -99,5 +99,17 @@ namespace Daishi.SQLBuilder {
             source.Command.CommandText = string.Concat(source.Command.CommandText, @" or ", columnName);
             return source;
         }
+
+        public static SQLBuilder InnerJoin(this SQLBuilder source,
+                                           string rightTableName,
+                                           string leftTableName,
+                                           string leftColumnName,
+                                           string rightColumnName
+            ) {
+            source.Command.CommandText = string.Concat(source.Command.CommandText, @" inner join dbo.",
+                                                       rightTableName, @" on dbo.", leftTableName, @".",
+                                                       leftColumnName, @"=dbo.", rightTableName, @".", rightColumnName);
+            return source;
+        }
     }
 }

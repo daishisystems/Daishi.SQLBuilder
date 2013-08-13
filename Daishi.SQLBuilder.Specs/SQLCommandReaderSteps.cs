@@ -27,16 +27,15 @@ namespace Daishi.SQLBuilder.Specs {
 
         [When(@"the requested data is returned")]
         public void WhenTheRequestedDataIsReturned() {
-            builder.Command.Execute();
+            builder.Execute();
         }
 
         [Then(@"the rows are persisted to a SQLDataReader")]
         public void ThenTheRowsArePersistedToASQLDataReader() {
             var reader = builder.Command.Result as SqlDataReader;
-            Assert.IsNotNull(builder.Command.Result);
 
-            if (reader == null || !reader.HasRows) return;
             try {
+                Assert.IsNotNull(reader);
                 reader.Read();
 
                 var id = reader.GetInt32(0);
@@ -46,8 +45,8 @@ namespace Daishi.SQLBuilder.Specs {
                 Assert.AreEqual(@"New Years Day", description);
             }
             finally {
-                reader.Close();
-                builder.Command.Connection.Dispose();
+                if (reader != null && !reader.IsClosed) reader.Close();
+                if (builder.Command.Connection != null) builder.Command.Connection.Dispose();
             }
         }
     }

@@ -152,5 +152,14 @@ namespace Daishi.SQLBuilder.UnitTests {
 
             Assert.AreEqual(correctSQL, sqlBuilder.Or(@"myColumn").Command.CommandText);
         }
+
+        [Test]
+        public void SQLBuilderAppendsInnerJoin() {
+            var sqlBuilder = new SQLBuilder(string.Empty);
+            const string correctSQL = @" inner join dbo.myOtherTable on dbo.myTable.myLeftColumn=dbo.myOtherTable.myRightColumn";
+
+            Assert.AreEqual(correctSQL,
+                            sqlBuilder.InnerJoin(@"myOtherTable", @"myTable", @"myLeftColumn", @"myRightColumn").Command.CommandText);
+        }
     }
 }

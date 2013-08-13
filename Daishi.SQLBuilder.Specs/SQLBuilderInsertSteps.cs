@@ -48,7 +48,7 @@ namespace Daishi.SQLBuilder.Specs {
                 .Where(@"Member_MemberId")
                 .EqualTo(Convert.ToInt32(sqlBatchBuilder.Result));
 
-            sqlDeletor.Command.Execute();
+            sqlDeletor.Execute();
         }
     }
 }
