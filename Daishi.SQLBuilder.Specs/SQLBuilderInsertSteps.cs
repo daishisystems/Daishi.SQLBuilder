@@ -25,7 +25,8 @@ namespace Daishi.SQLBuilder.Specs {
             var sqlSelector = new SQLBuilder(connectionString);
             sqlSelector.Select(@"scope_identity()");
 
-            sqlBatchBuilder = new SQLBatchBuilder(connectionString, sqlInsertor, sqlSelector);
+            sqlBatchBuilder = new SQLBatchBuilder(connectionString, sqlInsertor, sqlSelector) {Command = {CommandType = SQLCommandType.Scalar}};
+            ;
         }
 
         [When(@"I invoke the command")]
@@ -40,7 +41,8 @@ namespace Daishi.SQLBuilder.Specs {
 
         [After(@"requires_teardown")]
         public static void CleanUp() {
-            var sqlDeletor = new SQLBuilder(connectionString);
+            var sqlDeletor = new SQLBuilder(connectionString) {Command = {CommandType = SQLCommandType.Scalar}};
+            ;
 
             sqlDeletor
                 .Delete()

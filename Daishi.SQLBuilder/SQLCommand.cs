@@ -30,7 +30,7 @@ namespace Daishi.SQLBuilder {
                     }
 
                     break;
-                case SQLCommandType.Writer:
+                case SQLCommandType.Scalar:
                     using (Connection = new SqlConnection(connectionString)) {
                         Connection.Open();
 

@@ -2,6 +2,6 @@
     public enum SQLCommandType {
         NotSet,
         Reader,
-        Writer
+        Scalar
     }
 }

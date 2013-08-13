@@ -10,8 +10,6 @@ namespace Daishi.SQLBuilder {
     public static class SQLBuilderExtensions {
         public static SQLBuilder Select(this SQLBuilder source, params string[] parameters) {
             source.Command.CommandText = string.Concat(source.Command.CommandText, @"select ", string.Join(@",", parameters));
-
-            if (source.Command.CommandType.Equals(SQLCommandType.NotSet)) source.Command.CommandType = SQLCommandType.Reader;
             return source;
         }
 
@@ -33,15 +31,11 @@ namespace Daishi.SQLBuilder {
             stringBuilder.Append(@")");
 
             source.Command.CommandText = string.Concat(source.Command.CommandText, @"insert dbo.", tableName, @" (", string.Join(@",", parameters), @")", stringBuilder);
-
-            source.Command.CommandType = SQLCommandType.Writer;
             return source;
         }
 
         public static SQLBuilder Delete(this SQLBuilder source) {
             source.Command.CommandText = string.Concat(source.Command.CommandText, @"delete");
-
-            source.Command.CommandType = SQLCommandType.Writer;
             return source;
         }
 

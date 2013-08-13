@@ -15,7 +15,7 @@ namespace Daishi.SQLBuilder.Specs {
         [Given(@"I have generated a SQL Command")]
         public void GivenIHaveGeneratedASQLCommand() {
             var connectionString = ConfigurationManager.ConnectionStrings[@"ePlanner"].ConnectionString;
-            builder = new SQLBuilder(connectionString);
+            builder = new SQLBuilder(connectionString) {Command = {CommandType = SQLCommandType.Reader}};
 
             builder.Select(@"TimeSlot.TimeSlot_TimeSlotId", @"Recurrence.Recurrence_RecurrenceId")
                    .From(@"TimeSlot");

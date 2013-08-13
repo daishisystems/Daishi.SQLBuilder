@@ -19,7 +19,6 @@ namespace Daishi.SQLBuilder {
 
         public override void Execute() {
             Command.CommandText = ToString();
-            Command.CommandType = SQLCommandType.Writer;
 
             Command.Execute();
             Result = Command.Result;

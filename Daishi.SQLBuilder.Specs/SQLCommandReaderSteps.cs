@@ -15,7 +15,8 @@ namespace Daishi.SQLBuilder.Specs {
         [Given(@"I have invoked a select command")]
         public void GivenIHaveInvokedASelectCommand() {
             var connectionString = ConfigurationManager.ConnectionStrings[@"ePlanner"].ConnectionString;
-            builder = new SQLBuilder(connectionString);
+            builder = new SQLBuilder(connectionString) {Command = {CommandType = SQLCommandType.Reader}};
+            ;
 
             builder.Select(@"*").From(@"holiday");
         }
