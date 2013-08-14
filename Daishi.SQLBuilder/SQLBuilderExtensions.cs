@@ -44,6 +44,11 @@ namespace Daishi.SQLBuilder {
             return source;
         }
 
+        public static SQLBuilder Where(this SQLBuilder source, string tableName, string columnName) {
+            source.Command.CommandText = string.Concat(source.Command.CommandText, @" where ", tableName, @".", columnName);
+            return source;
+        }
+
         public static SQLBuilder EqualTo(this SQLBuilder source, int identifier) {
             source.Command.CommandText = string.Concat(source.Command.CommandText, @"=", identifier);
             return source;

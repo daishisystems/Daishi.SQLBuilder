@@ -161,5 +161,13 @@ namespace Daishi.SQLBuilder.UnitTests {
             Assert.AreEqual(correctSQL,
                             sqlBuilder.InnerJoin(@"myOtherTable", @"myTable", @"myLeftColumn", @"myRightColumn").Command.CommandText);
         }
+
+        [Test]
+        public void SQLBuilderAllowsTableNameInWhereClause() {
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
+            const string correctSQL = @" where myTable.myColumn";
+
+            Assert.AreEqual(correctSQL, sqlBuilder.Where(@"myTable", @"myColumn").ToString());
+        }
     }
 }
