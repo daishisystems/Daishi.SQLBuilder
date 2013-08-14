@@ -9,11 +9,11 @@ namespace Daishi.SQLBuilder {
     public class SQLBatchBuilder : SQLBuilder {
         private readonly IEnumerable<SQLBuilder> sqlBuilders;
 
-        public SQLBatchBuilder(string connectionString, params SQLBuilder[] sqlBuilders) : base(connectionString) {
+        public SQLBatchBuilder(string connectionString, SQLCommandType commandType, params SQLBuilder[] sqlBuilders) : base(connectionString, commandType) {
             this.sqlBuilders = sqlBuilders;
         }
 
-        public SQLBatchBuilder(string connectionString, IEnumerable<SQLBuilder> sqlBuilders) : base(connectionString) {
+        public SQLBatchBuilder(string connectionString, SQLCommandType commandType, IEnumerable<SQLBuilder> sqlBuilders) : base(connectionString, commandType) {
             this.sqlBuilders = sqlBuilders;
         }
 

@@ -11,7 +11,7 @@ namespace Daishi.SQLBuilder.UnitTests {
     internal class SQLBuilderTest {
         [Test]
         public void SQLBuilderWritesCorrectSelectCommand() {
-            var sqlBuilder = new SQLBuilder(string.Empty);
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @"select *";
 
             Assert.AreEqual(correctSQL, sqlBuilder.Select(@"*").Command.CommandText);
@@ -19,7 +19,7 @@ namespace Daishi.SQLBuilder.UnitTests {
 
         [Test]
         public void SQLBuilderWritesCorrectSelectCommandWithMultipleParameters() {
-            var sqlBuilder = new SQLBuilder(string.Empty);
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @"select FirstName,Surname";
 
             Assert.AreEqual(correctSQL, sqlBuilder.Select(@"FirstName", @"Surname").Command.CommandText);
@@ -27,7 +27,7 @@ namespace Daishi.SQLBuilder.UnitTests {
 
         [Test]
         public void SQLBuilderAppendsCorrectFromClause() {
-            var sqlBuilder = new SQLBuilder(string.Empty);
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @" from dbo.myTable";
 
             Assert.AreEqual(correctSQL, sqlBuilder.From(@"myTable").Command.CommandText);
@@ -35,7 +35,7 @@ namespace Daishi.SQLBuilder.UnitTests {
 
         [Test]
         public void SQLBuilderAppendsCorrectFromClauseWithMultipleTables() {
-            var sqlBuilder = new SQLBuilder(string.Empty);
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @" from dbo.myTable1,dbo.myTable2";
 
             Assert.AreEqual(correctSQL, sqlBuilder.From(@"myTable1", @"myTable2").Command.CommandText);
@@ -43,7 +43,7 @@ namespace Daishi.SQLBuilder.UnitTests {
 
         [Test]
         public void SQLBuilderWritesCorrectInsertCommand() {
-            var sqlBuilder = new SQLBuilder(string.Empty);
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
 
             var dummyPoco = new DummyPOCO {
                 Id = 1,
@@ -59,7 +59,7 @@ namespace Daishi.SQLBuilder.UnitTests {
 
         [Test]
         public void SQLBuilderAppendsEqualsClauseWithIntegerBasedIdentifiers() {
-            var sqlBuilder = new SQLBuilder(string.Empty);
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @"=1";
 
             var dummyPOCOWithIntId = new DummyPOCO {Id = 1};
@@ -68,7 +68,7 @@ namespace Daishi.SQLBuilder.UnitTests {
 
         [Test]
         public void SQLBuilderAppendsEqualsClauseWithStringBasedIdentifiers() {
-            var sqlBuilder = new SQLBuilder(string.Empty);
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @"='Dummy'";
 
             var dummyPOCOWithIntId = new DummyPOCO {FirstName = @"Dummy"};
@@ -77,7 +77,7 @@ namespace Daishi.SQLBuilder.UnitTests {
 
         [Test]
         public void SQLBuilderAppendsNotEqualClauseWithIntegerBasedIdentifiers() {
-            var sqlBuilder = new SQLBuilder(string.Empty);
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @"!=1";
 
             var dummyPOCOWithIntId = new DummyPOCO {Id = 1};
@@ -86,7 +86,7 @@ namespace Daishi.SQLBuilder.UnitTests {
 
         [Test]
         public void SQLBuilderAppendsNotEqualClauseWithStringBasedIdentifiers() {
-            var sqlBuilder = new SQLBuilder(string.Empty);
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @"!='Dummy'";
 
             var dummyPOCOWithIntId = new DummyPOCO {FirstName = @"Dummy"};
@@ -95,7 +95,7 @@ namespace Daishi.SQLBuilder.UnitTests {
 
         [Test]
         public void SQLBuilderWritesCorrectDeleteCommand() {
-            var sqlBuilder = new SQLBuilder(string.Empty);
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @"delete";
 
             Assert.AreEqual(correctSQL, sqlBuilder.Delete().Command.CommandText);
@@ -103,7 +103,7 @@ namespace Daishi.SQLBuilder.UnitTests {
 
         [Test]
         public void SQLBuilderAppendsWhereClause() {
-            var sqlBuilder = new SQLBuilder(string.Empty);
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @" where myColumn";
 
             Assert.AreEqual(correctSQL, sqlBuilder.Where(@"myColumn").Command.CommandText);
@@ -111,7 +111,7 @@ namespace Daishi.SQLBuilder.UnitTests {
 
         [Test]
         public void SQLBuilderAppendsInClauseWithIntegerBasedIdentifiers() {
-            var sqlBuilder = new SQLBuilder(string.Empty);
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @" in (1,2,3)";
 
             var dummyPOCOsWithIntIds = new List<DummyPOCOWithIntId> {
@@ -125,7 +125,7 @@ namespace Daishi.SQLBuilder.UnitTests {
 
         [Test]
         public void SQLBuilderAppendsInClauseWithStringBasedIdentifiers() {
-            var sqlBuilder = new SQLBuilder(string.Empty);
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @" in ('One','Two','Three')";
 
             var dummyPOCOsWithStringIds = new List<DummyPOCOWithStringId> {
@@ -139,7 +139,7 @@ namespace Daishi.SQLBuilder.UnitTests {
 
         [Test]
         public void SQLBuilderAppendsAndBitwiseOperator() {
-            var sqlBuilder = new SQLBuilder(string.Empty);
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @" and myColumn";
 
             Assert.AreEqual(correctSQL, sqlBuilder.And(@"myColumn").Command.CommandText);
@@ -147,7 +147,7 @@ namespace Daishi.SQLBuilder.UnitTests {
 
         [Test]
         public void SQLBuilderAppendsOrBitwiseOperator() {
-            var sqlBuilder = new SQLBuilder(string.Empty);
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @" or myColumn";
 
             Assert.AreEqual(correctSQL, sqlBuilder.Or(@"myColumn").Command.CommandText);
@@ -155,7 +155,7 @@ namespace Daishi.SQLBuilder.UnitTests {
 
         [Test]
         public void SQLBuilderAppendsInnerJoin() {
-            var sqlBuilder = new SQLBuilder(string.Empty);
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @" inner join dbo.myOtherTable on dbo.myTable.myLeftColumn=dbo.myOtherTable.myRightColumn";
 
             Assert.AreEqual(correctSQL,

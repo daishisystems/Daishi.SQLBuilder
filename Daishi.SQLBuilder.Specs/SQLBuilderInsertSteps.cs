@@ -17,16 +17,15 @@ namespace Daishi.SQLBuilder.Specs {
         [Given(@"I have provided a SQL insert command")]
         public void GivenIHaveProvidedASQLInsertCommand() {
             connectionString = ConfigurationManager.ConnectionStrings[@"ePlanner"].ConnectionString;
-            var sqlInsertor = new SQLBuilder(connectionString);
+            var sqlInsertor = new SQLBuilder(connectionString, SQLCommandType.NotSet);
 
             var parameters = new List<string> {@"Member_ExternalId", @"Member_ConsumerId"};
             sqlInsertor.Insert(@"member", parameters, Guid.NewGuid().ToString().Replace(@"-", string.Empty), Guid.NewGuid().ToString().Replace(@"-", string.Empty));
 
-            var sqlSelector = new SQLBuilder(connectionString);
+            var sqlSelector = new SQLBuilder(connectionString, SQLCommandType.NotSet);
             sqlSelector.Select(@"scope_identity()");
 
-            sqlBatchBuilder = new SQLBatchBuilder(connectionString, sqlInsertor, sqlSelector) {Command = {CommandType = SQLCommandType.Scalar}};
-            ;
+            sqlBatchBuilder = new SQLBatchBuilder(connectionString, SQLCommandType.Scalar, sqlInsertor, sqlSelector);
         }
 
         [When(@"I invoke the command")]
@@ -41,8 +40,7 @@ namespace Daishi.SQLBuilder.Specs {
 
         [After(@"requires_teardown")]
         public static void CleanUp() {
-            var sqlDeletor = new SQLBuilder(connectionString) {Command = {CommandType = SQLCommandType.Scalar}};
-            ;
+            var sqlDeletor = new SQLBuilder(connectionString, SQLCommandType.Scalar);
 
             sqlDeletor
                 .Delete()

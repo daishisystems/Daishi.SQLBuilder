@@ -9,8 +9,8 @@ namespace Daishi.SQLBuilder {
         public SQLCommand Command { get; private set; }
         public object Result { get; protected set; }
 
-        public SQLBuilder(string connectionString) {
-            Command = new SQLCommand(connectionString);
+        public SQLBuilder(string connectionString, SQLCommandType commandType) {
+            Command = new SQLCommand(connectionString) {CommandType = commandType};
         }
 
         public virtual void Execute() {
