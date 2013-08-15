@@ -14,15 +14,15 @@ namespace Daishi.SQLBuilder.UnitTests {
             var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @"select *";
 
-            Assert.AreEqual(correctSQL, sqlBuilder.Select(@"*").Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.Select(@"*").ToString());
         }
 
         [Test]
-        public void SQLBuilderWritesCorrectSelectCommandWithMultipleParameters() {
+        public void SQLBuilderWritesCorrectSelectCommandWithMultipleColumns() {
             var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @"select FirstName,Surname";
 
-            Assert.AreEqual(correctSQL, sqlBuilder.Select(@"FirstName", @"Surname").Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.Select(@"FirstName", @"Surname").ToString());
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace Daishi.SQLBuilder.UnitTests {
             var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @" from dbo.myTable";
 
-            Assert.AreEqual(correctSQL, sqlBuilder.From(@"myTable").Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.From(@"myTable").ToString());
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace Daishi.SQLBuilder.UnitTests {
             var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @" from dbo.myTable1,dbo.myTable2";
 
-            Assert.AreEqual(correctSQL, sqlBuilder.From(@"myTable1", @"myTable2").Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.From(@"myTable1", @"myTable2").ToString());
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Daishi.SQLBuilder.UnitTests {
             var parameters = new List<string> {@"id", @"firstname", @"surname"};
             const string correctSQL = @"insert dbo.myTable (id,firstname,surname) values (1,'Dummy','POCO')";
 
-            Assert.AreEqual(correctSQL, sqlBuilder.Insert(@"myTable", parameters, dummyPoco.Id, dummyPoco.FirstName, dummyPoco.Surname).Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.Insert(@"myTable", parameters, dummyPoco.Id, dummyPoco.FirstName, dummyPoco.Surname).ToString());
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Daishi.SQLBuilder.UnitTests {
             const string correctSQL = @"=1";
 
             var dummyPOCOWithIntId = new DummyPOCO {Id = 1};
-            Assert.AreEqual(correctSQL, sqlBuilder.EqualTo(dummyPOCOWithIntId.Id).Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.EqualTo(dummyPOCOWithIntId.Id).ToString());
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace Daishi.SQLBuilder.UnitTests {
             const string correctSQL = @"='Dummy'";
 
             var dummyPOCOWithIntId = new DummyPOCO {FirstName = @"Dummy"};
-            Assert.AreEqual(correctSQL, sqlBuilder.EqualTo(dummyPOCOWithIntId.FirstName).Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.EqualTo(dummyPOCOWithIntId.FirstName).ToString());
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Daishi.SQLBuilder.UnitTests {
             const string correctSQL = @"!=1";
 
             var dummyPOCOWithIntId = new DummyPOCO {Id = 1};
-            Assert.AreEqual(correctSQL, sqlBuilder.NotEqualTo(dummyPOCOWithIntId.Id).Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.NotEqualTo(dummyPOCOWithIntId.Id).ToString());
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace Daishi.SQLBuilder.UnitTests {
             const string correctSQL = @"!='Dummy'";
 
             var dummyPOCOWithIntId = new DummyPOCO {FirstName = @"Dummy"};
-            Assert.AreEqual(correctSQL, sqlBuilder.NotEqualTo(dummyPOCOWithIntId.FirstName).Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.NotEqualTo(dummyPOCOWithIntId.FirstName).ToString());
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Daishi.SQLBuilder.UnitTests {
             var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @"delete";
 
-            Assert.AreEqual(correctSQL, sqlBuilder.Delete().Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.Delete().ToString());
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace Daishi.SQLBuilder.UnitTests {
             var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @" where myColumn";
 
-            Assert.AreEqual(correctSQL, sqlBuilder.Where(@"myColumn").Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.Where(@"myColumn").ToString());
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace Daishi.SQLBuilder.UnitTests {
                 new DummyPOCOWithIntId {Id = 3}
             };
 
-            Assert.AreEqual(correctSQL, sqlBuilder.In(dummyPOCOsWithIntIds.Select(d => d.Id).ToArray()).Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.In(dummyPOCOsWithIntIds.Select(d => d.Id).ToArray()).ToString());
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace Daishi.SQLBuilder.UnitTests {
                 new DummyPOCOWithStringId {Id = @"Three"}
             };
 
-            Assert.AreEqual(correctSQL, sqlBuilder.In(dummyPOCOsWithStringIds.Select(d => d.Id).ToArray()).Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.In(dummyPOCOsWithStringIds.Select(d => d.Id).ToArray()).ToString());
         }
 
         [Test]
@@ -142,7 +142,7 @@ namespace Daishi.SQLBuilder.UnitTests {
             var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @" and myColumn";
 
-            Assert.AreEqual(correctSQL, sqlBuilder.And(@"myColumn").Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.And(@"myColumn").ToString());
         }
 
         [Test]
@@ -150,7 +150,7 @@ namespace Daishi.SQLBuilder.UnitTests {
             var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
             const string correctSQL = @" or myColumn";
 
-            Assert.AreEqual(correctSQL, sqlBuilder.Or(@"myColumn").Command.CommandText);
+            Assert.AreEqual(correctSQL, sqlBuilder.Or(@"myColumn").ToString());
         }
 
         [Test]
@@ -159,7 +159,7 @@ namespace Daishi.SQLBuilder.UnitTests {
             const string correctSQL = @" inner join dbo.myOtherTable on dbo.myTable.myLeftColumn=dbo.myOtherTable.myRightColumn";
 
             Assert.AreEqual(correctSQL,
-                            sqlBuilder.InnerJoin(@"myOtherTable", @"myTable", @"myLeftColumn", @"myRightColumn").Command.CommandText);
+                            sqlBuilder.InnerJoin(@"myOtherTable", @"myTable", @"myLeftColumn", @"myRightColumn").ToString());
         }
 
         [Test]

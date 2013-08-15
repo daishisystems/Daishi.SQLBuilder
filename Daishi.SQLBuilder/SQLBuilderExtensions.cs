@@ -8,8 +8,35 @@ using System.Text;
 
 namespace Daishi.SQLBuilder {
     public static class SQLBuilderExtensions {
-        public static SQLBuilder Select(this SQLBuilder source, params string[] parameters) {
-            source.Command.CommandText = string.Concat(source.Command.CommandText, @"select ", string.Join(@",", parameters));
+        public static SQLBuilder Select(this SQLBuilder source, params string[] columnNames) {
+            source.Command.CommandText = string.Concat(@"select ", string.Join(@",", columnNames), source.Command.CommandText);
+            return source;
+        }
+
+        public static SQLBuilder Select(this SQLBuilder source, IEnumerable<string> columnNames) {
+            source.Command.CommandText = string.Concat(@"select ", string.Join(@",", columnNames), source.Command.CommandText);
+            return source;
+        }
+
+        public static SQLBuilder Select(this SQLBuilder source, params SQLParameter[] parameters) {
+            var formatter = new SQLParameterFormatter(parameters);
+            formatter.Execute();
+
+            source.Command.Parameters = parameters.Select(p => p.Parameter).ToArray();
+            source.Command.CommandText = string.Concat(formatter.Result, source.Command.CommandText);
+
+            return source;
+        }
+
+        public static SQLBuilder Select(this SQLBuilder source, IEnumerable<SQLParameter> parameters) {
+            var @params = parameters.ToList();
+
+            var formatter = new SQLParameterFormatter(@params);
+            formatter.Execute();
+
+            source.Command.Parameters = @params.Select(p => p.Parameter).ToArray();
+            source.Command.CommandText = string.Concat(formatter.Result, source.Command.CommandText);
+
             return source;
         }
 

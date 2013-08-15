@@ -12,7 +12,9 @@ namespace Daishi.SQLBuilder {
         public object Result { get; private set; }
         public string CommandText { get; set; }
         public SQLCommandType CommandType { get; set; }
+
         public SqlConnection Connection { get; private set; }
+        public SqlParameter[] Parameters { get; set; }
 
         public SQLCommand(string connectionString) {
             this.connectionString = connectionString;
@@ -26,6 +28,7 @@ namespace Daishi.SQLBuilder {
 
                     using (var command = Connection.CreateCommand()) {
                         command.CommandText = CommandText;
+                        if (Parameters != null) command.Parameters.AddRange(Parameters);
                         Result = command.ExecuteReader();
                     }
 
@@ -36,12 +39,13 @@ namespace Daishi.SQLBuilder {
 
                         using (var command = Connection.CreateCommand()) {
                             command.CommandText = CommandText;
+                            if (Parameters != null) command.Parameters.AddRange(Parameters);
                             Result = command.ExecuteScalar();
                         }
                     }
                     break;
                 default:
-                    throw new NotImplementedException();
+                    throw new NotImplementedException(@"Unspecified SQLCommandType.");
             }
         }
 
