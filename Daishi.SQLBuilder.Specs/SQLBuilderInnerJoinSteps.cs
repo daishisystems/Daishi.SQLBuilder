@@ -42,8 +42,8 @@ namespace Daishi.SQLBuilder.Specs {
                 Assert.AreEqual(2, reader.FieldCount);
             }
             finally {
-                if (reader != null && !reader.IsClosed) reader.Close();
-                if (builder.Command.Connection != null) builder.Command.Connection.Dispose();
+                if (reader != null && !reader.IsClosed) reader.Dispose();
+                if (builder != null) builder.Dispose();
             }
         }
     }

@@ -6,27 +6,29 @@ using System.Data.SqlClient;
 #endregion
 
 namespace Daishi.SQLBuilder {
-    public class SQLCommand : ICommand {
+    public class SQLCommand : ICommand, IDisposable {
         private readonly string connectionString;
+        private bool disposed;
+        private SqlConnection connection;
+        private SqlCommand command;
 
         public object Result { get; private set; }
         public string CommandText { get; set; }
         public SQLCommandType CommandType { get; set; }
-
-        public SqlConnection Connection { get; private set; }
         public SqlParameter[] Parameters { get; set; }
 
         public SQLCommand(string connectionString) {
             this.connectionString = connectionString;
         }
 
+        // todo: abstract to Bridge.
         public void Execute() {
             switch (CommandType) {
                 case SQLCommandType.Reader:
-                    Connection = new SqlConnection(connectionString);
-                    Connection.Open();
+                    connection = new SqlConnection(connectionString);
+                    connection.Open();
 
-                    using (var command = Connection.CreateCommand()) {
+                    using (command = connection.CreateCommand()) {
                         command.CommandText = CommandText;
                         if (Parameters != null) command.Parameters.AddRange(Parameters);
                         Result = command.ExecuteReader();
@@ -34,10 +36,10 @@ namespace Daishi.SQLBuilder {
 
                     break;
                 case SQLCommandType.Scalar:
-                    using (Connection = new SqlConnection(connectionString)) {
-                        Connection.Open();
+                    using (connection = new SqlConnection(connectionString)) {
+                        connection.Open();
 
-                        using (var command = Connection.CreateCommand()) {
+                        using (command = connection.CreateCommand()) {
                             command.CommandText = CommandText;
                             if (Parameters != null) command.Parameters.AddRange(Parameters);
                             Result = command.ExecuteScalar();
@@ -51,6 +53,22 @@ namespace Daishi.SQLBuilder {
 
         public void Undo() {
             throw new NotImplementedException();
+        }
+
+        public void Dispose() {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing) {
+            if (disposed || !disposing) return;
+
+            if (command != null) command.Dispose();
+            if (connection != null) connection.Dispose();
+
+            command = null;
+            connection = null;
+            disposed = true;
         }
     }
 }

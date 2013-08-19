@@ -43,7 +43,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLBatchBuilder.cs" />
     <Compile Include="SQLBuilder.cs" />
-    <Compile Include="SQLBuilderExtensions.cs" />
     <Compile Include="SQLCommand.cs" />
     <Compile Include="SQLCommandType.cs" />
     <Compile Include="SQLParameter.cs" />

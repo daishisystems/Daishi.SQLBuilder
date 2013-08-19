@@ -18,10 +18,10 @@ namespace Daishi.SQLBuilder {
         }
 
         public override void Execute() {
-            Command.CommandText = ToString();
+            command.CommandText = ToString();
 
-            Command.Execute();
-            Result = Command.Result;
+            command.Execute();
+            Result = command.Result;
         }
 
         public override string ToString() {

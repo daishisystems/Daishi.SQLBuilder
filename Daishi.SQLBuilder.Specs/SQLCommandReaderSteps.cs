@@ -16,14 +16,13 @@ namespace Daishi.SQLBuilder.Specs {
         public void GivenIHaveInvokedASelectCommand() {
             var connectionString = ConfigurationManager.ConnectionStrings[@"ePlanner"].ConnectionString;
             builder = new SQLBuilder(connectionString, SQLCommandType.Reader);
-            ;
 
             builder.Select(@"*").From(@"holiday");
         }
 
         [Given(@"SQLCommand is in read-mode")]
         public void GivenSQLCommandIsInRead_Mode() {
-            Assert.AreEqual(SQLCommandType.Reader, builder.Command.CommandType);
+            Assert.AreEqual(SQLCommandType.Reader, builder.CommandType);
         }
 
         [When(@"the requested data is returned")]
@@ -33,7 +32,7 @@ namespace Daishi.SQLBuilder.Specs {
 
         [Then(@"the rows are persisted to a SQLDataReader")]
         public void ThenTheRowsArePersistedToASQLDataReader() {
-            var reader = builder.Command.Result as SqlDataReader;
+            var reader = builder.Result as SqlDataReader;
 
             try {
                 Assert.IsNotNull(reader);
@@ -46,8 +45,7 @@ namespace Daishi.SQLBuilder.Specs {
                 Assert.AreEqual(@"New Years Day", description);
             }
             finally {
-                if (reader != null && !reader.IsClosed) reader.Close();
-                if (builder.Command.Connection != null) builder.Command.Connection.Dispose();
+                builder.Dispose();
             }
         }
     }

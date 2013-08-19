@@ -50,11 +50,11 @@ namespace Daishi.SQLBuilder.Specs {
 
         [Then(@"the SqlParameters should be output with the command result")]
         public void ThenTheSqlParametersShouldBeOutputWithTheCommandResult() {
-            Assert.AreEqual(SqlDbType.Date, builder.Command.Parameters[0].SqlDbType);
-            Assert.AreEqual(SqlDbType.NVarChar, builder.Command.Parameters[1].SqlDbType);
+            Assert.AreEqual(SqlDbType.Date, builder.Parameters[0].SqlDbType);
+            Assert.AreEqual(SqlDbType.NVarChar, builder.Parameters[1].SqlDbType);
 
-            Assert.NotNull(builder.Command.Parameters[0].Value);
-            Assert.NotNull(builder.Command.Parameters[1].Value);
+            Assert.NotNull(builder.Parameters[0].Value);
+            Assert.NotNull(builder.Parameters[1].Value);
         }
     }
 }
