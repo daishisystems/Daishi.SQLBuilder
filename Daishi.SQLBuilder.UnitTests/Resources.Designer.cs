@@ -61,7 +61,7 @@ namespace Daishi.SQLBuilder.UnitTests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select @date=Holiday_Date,@description=Holiday_Description.
+        ///   Looks up a localized string similar to select date=Holiday_Date,description=Holiday_Description.
         /// </summary>
         internal static string ParameterisedSQL {
             get {

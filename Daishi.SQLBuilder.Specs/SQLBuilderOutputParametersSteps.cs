@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
 
@@ -23,18 +22,8 @@ namespace Daishi.SQLBuilder.Specs {
         [Given(@"I have applied (.*) SqlParameters to the command")]
         public void GivenIHaveAppliedSqlParametersToTheCommand(int p0) {
             var parameters = new List<SQLParameter> {
-                new SQLParameter {
-                    ColumnMapping = @"Holiday_Date",
-                    Parameter = new SqlParameter(@"@date", SqlDbType.Date) {
-                        Direction = ParameterDirection.Output
-                    }
-                },
-                new SQLParameter {
-                    ColumnMapping = @"Holiday_Description",
-                    Parameter = new SqlParameter(@"@description", SqlDbType.NVarChar, 60) {
-                        Direction = ParameterDirection.Output
-                    }
-                }
+                new SQLParameter(@"Holiday_Date", @"date", SqlDbType.Date, ParameterDirection.Output),
+                new SQLParameter(@"Holiday_Description", @"description", SqlDbType.NVarChar, 60, ParameterDirection.Output)
             };
 
             builder.Select(parameters)

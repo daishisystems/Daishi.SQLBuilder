@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
 
@@ -19,14 +18,8 @@ namespace Daishi.SQLBuilder.Specs {
             builder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
 
             var parameters = new List<SQLParameter> {
-                new SQLParameter {
-                    ColumnMapping = @"Holiday_Date",
-                    Parameter = new SqlParameter(@"@date", SqlDbType.Date)
-                },
-                new SQLParameter {
-                    ColumnMapping = @"Holiday_Description",
-                    Parameter = new SqlParameter(@"@description", SqlDbType.NVarChar, 60)
-                }
+                new SQLParameter(@"Holiday_Date", @"date", SqlDbType.Date, ParameterDirection.Output),
+                new SQLParameter(@"Holiday_Description", @"description", SqlDbType.NVarChar, 60, ParameterDirection.Output)
             };
 
             builder.Select(parameters);
