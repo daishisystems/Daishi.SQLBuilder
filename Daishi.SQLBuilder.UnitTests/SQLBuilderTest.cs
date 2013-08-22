@@ -186,5 +186,13 @@ namespace Daishi.SQLBuilder.UnitTests {
             Assert.AreEqual(correctSQL,
                             sqlBuilder.LeftJoin(@"myOtherTable", @"myTable", @"myLeftColumn", @"myRightColumn").ToString());
         }
+
+        [Test]
+        public void SQLBuilderAppendsRawSQL() {
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
+            const string correctSQL = @"declare @identity decimal";
+
+            Assert.AreEqual(correctSQL, sqlBuilder.Raw(@"declare @identity decimal").ToString());
+        }
     }
 }

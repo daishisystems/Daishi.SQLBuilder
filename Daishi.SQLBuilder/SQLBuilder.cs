@@ -74,7 +74,7 @@ namespace Daishi.SQLBuilder {
             var formattedValues = new List<string>();
 
             foreach (var value in values) {
-                if (value is int) formattedValues.Add(value.ToString());
+                if (value is int || value.ToString().StartsWith(@"@")) formattedValues.Add(value.ToString());
                 else formattedValues.Add(string.Concat(@"'", value, @"'"));
             }
 
@@ -176,6 +176,11 @@ namespace Daishi.SQLBuilder {
             command.CommandText = string.Concat(command.CommandText, @" left join dbo.",
                                                 rightTableName, @" on dbo.", leftTableName, @".",
                                                 leftColumnName, @"=dbo.", rightTableName, @".", rightColumnName);
+            return this;
+        }
+
+        public SQLBuilder Raw(string sql) {
+            command.CommandText = string.Concat(sql, command.CommandText);
             return this;
         }
 

@@ -21,7 +21,6 @@ namespace Daishi.SQLBuilder {
             this.connectionString = connectionString;
         }
 
-        // todo: abstract to Bridge.
         public void Execute() {
             switch (CommandType) {
                 case SQLCommandType.Reader:
