@@ -90,6 +90,11 @@ namespace Daishi.SQLBuilder {
             return this;
         }
 
+        public SQLBuilder Delete(string tableName) {
+            command.CommandText = string.Concat(command.CommandText, @"delete ", @"dbo.", tableName);
+            return this;
+        }
+
         public SQLBuilder Where(string columnName) {
             command.CommandText = string.Concat(command.CommandText, @" where ", columnName);
             return this;
@@ -157,6 +162,18 @@ namespace Daishi.SQLBuilder {
             string rightColumnName
             ) {
             command.CommandText = string.Concat(command.CommandText, @" inner join dbo.",
+                                                rightTableName, @" on dbo.", leftTableName, @".",
+                                                leftColumnName, @"=dbo.", rightTableName, @".", rightColumnName);
+            return this;
+        }
+
+        public SQLBuilder LeftJoin(
+            string rightTableName,
+            string leftTableName,
+            string leftColumnName,
+            string rightColumnName
+            ) {
+            command.CommandText = string.Concat(command.CommandText, @" left join dbo.",
                                                 rightTableName, @" on dbo.", leftTableName, @".",
                                                 leftColumnName, @"=dbo.", rightTableName, @".", rightColumnName);
             return this;

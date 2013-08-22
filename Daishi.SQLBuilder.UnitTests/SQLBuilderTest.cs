@@ -169,5 +169,22 @@ namespace Daishi.SQLBuilder.UnitTests {
 
             Assert.AreEqual(correctSQL, sqlBuilder.Where(@"myTable", @"myColumn").ToString());
         }
+
+        [Test]
+        public void DeleteCommandGeneratesExplicitTableName() {
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
+            const string correctSQL = @"delete dbo.myTable";
+
+            Assert.AreEqual(correctSQL, sqlBuilder.Delete(@"myTable").ToString());
+        }
+
+        [Test]
+        public void SQLBuilderAppendsLeftJoin() {
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
+            const string correctSQL = @" left join dbo.myOtherTable on dbo.myTable.myLeftColumn=dbo.myOtherTable.myRightColumn";
+
+            Assert.AreEqual(correctSQL,
+                            sqlBuilder.LeftJoin(@"myOtherTable", @"myTable", @"myLeftColumn", @"myRightColumn").ToString());
+        }
     }
 }
