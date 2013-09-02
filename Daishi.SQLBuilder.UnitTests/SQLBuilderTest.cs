@@ -1,5 +1,6 @@
 ﻿#region Includes
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -209,6 +210,38 @@ namespace Daishi.SQLBuilder.UnitTests {
             const string correctSQL = @"insert dbo.myTable (id,firstname,surname) values (1,'Dummy''s','POCO''s')";
 
             Assert.AreEqual(correctSQL, sqlBuilder.Insert(@"myTable", parameters, dummyPoco.Id, dummyPoco.FirstName, dummyPoco.Surname).ToString());
+        }
+
+        [Test]
+        public void SQLBuilderAppendsGreaterThanOrEqualClauseWithDateTimeParameter() {
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
+            const string correctSQL = @" >='2013-09-02 00:00:00Z'";
+
+            Assert.AreEqual(correctSQL, sqlBuilder.GreaterThanOrEqualTo(DateTime.Parse(@"2013-09-02 00:00:00")).ToString());
+        }
+
+        [Test]
+        public void SQLBuilderAppendsGreaterThanOrEqualClauseWithIntegerParameter() {
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
+            const string correctSQL = @" >=1";
+
+            Assert.AreEqual(correctSQL, sqlBuilder.GreaterThanOrEqualTo(1).ToString());
+        }
+
+        [Test]
+        public void SQLBuilderAppendsLessThanOrEqualClauseWithDateTimeParameter() {
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
+            const string correctSQL = @" <='2013-09-02 00:00:00Z'";
+
+            Assert.AreEqual(correctSQL, sqlBuilder.LessThanOrEqualTo(DateTime.Parse(@"2013-09-02 00:00:00")).ToString());
+        }
+
+        [Test]
+        public void SQLBuilderAppendsLessThanOrEqualClauseWithIntegerParameter() {
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
+            const string correctSQL = @" <=1";
+
+            Assert.AreEqual(correctSQL, sqlBuilder.LessThanOrEqualTo(1).ToString());
         }
     }
 }

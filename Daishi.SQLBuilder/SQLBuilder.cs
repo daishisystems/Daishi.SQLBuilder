@@ -145,6 +145,26 @@ namespace Daishi.SQLBuilder {
             return this;
         }
 
+        public SQLBuilder GreaterThanOrEqualTo(DateTime value) {
+            command.CommandText = string.Concat(@" >='", value.ToString(@"u"), @"'");
+            return this;
+        }
+
+        public SQLBuilder GreaterThanOrEqualTo(int value) {
+            command.CommandText = string.Concat(@" >=", value);
+            return this;
+        }
+
+        public SQLBuilder LessThanOrEqualTo(DateTime value) {
+            command.CommandText = string.Concat(@" <='", value.ToString(@"u"), @"'");
+            return this;
+        }
+
+        public SQLBuilder LessThanOrEqualTo(int value) {
+            command.CommandText = string.Concat(@" <=", value);
+            return this;
+        }
+
         public SQLBuilder And(string columnName) {
             command.CommandText = string.Concat(command.CommandText, @" and ", columnName);
             return this;
