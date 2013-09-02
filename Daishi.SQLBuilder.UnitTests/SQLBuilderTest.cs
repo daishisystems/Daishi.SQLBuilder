@@ -194,5 +194,21 @@ namespace Daishi.SQLBuilder.UnitTests {
 
             Assert.AreEqual(correctSQL, sqlBuilder.Raw(@"declare @identity decimal").ToString());
         }
+
+        [Test]
+        public void SQLBuilderHandlesApostrophes() {
+            var sqlBuilder = new SQLBuilder(string.Empty, SQLCommandType.NotSet);
+
+            var dummyPoco = new DummyPOCO {
+                Id = 1,
+                FirstName = @"Dummy's",
+                Surname = @"POCO's"
+            };
+
+            var parameters = new List<string> {@"id", @"firstname", @"surname"};
+            const string correctSQL = @"insert dbo.myTable (id,firstname,surname) values (1,'Dummy''s','POCO''s')";
+
+            Assert.AreEqual(correctSQL, sqlBuilder.Insert(@"myTable", parameters, dummyPoco.Id, dummyPoco.FirstName, dummyPoco.Surname).ToString());
+        }
     }
 }

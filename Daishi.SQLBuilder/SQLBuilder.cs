@@ -75,7 +75,7 @@ namespace Daishi.SQLBuilder {
 
             foreach (var value in values) {
                 if (value is int || value is byte || value.ToString().StartsWith(@"@")) formattedValues.Add(value.ToString());
-                else formattedValues.Add(string.Concat(@"'", value, @"'"));
+                else formattedValues.Add(string.Concat(@"'", value.ToString().Replace(@"'", @"''"), @"'"));
             }
 
             stringBuilder.Append(string.Join(@",", formattedValues));
