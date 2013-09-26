@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 #endregion
 
 namespace Daishi.SQLBuilder {
-    public class SQLTransactionBuilder : ICommand {
+    internal class SQLTransactionBuilder : ICommand {
         private readonly string connectionString;
         private readonly SQLBuilder[] sqlBuilders;
 
